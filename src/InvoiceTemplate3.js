@@ -30,7 +30,7 @@ const generateInvoice = (client, books, transporter, packaging) => {
     doc.line(10, 60, 200, 60);
     //console.log(client['shopName'])
     doc.setFontSize(14);
-    doc.text(`${client['CustomerName']},`, 14, 65);
+    doc.text(`${client['Name']},`, 14, 65);
     doc.text(`${client['shopName']},`, 14, 72);
     doc.setFontSize(12);
     doc.text(`${client['address']}, ${client['place']}, ${client['district']}, ${client['pincode']}`,14,79);
