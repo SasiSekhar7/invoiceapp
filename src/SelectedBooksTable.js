@@ -8,8 +8,8 @@ const SelectedBooksTable = ({ selectedBooks, onDeleteBook }) => {
         <thead>
           <tr>
             <th>Book Name</th>
-            <th>Bundle Quantity</th>
-            <th>Quantity</th>
+            <th>GBL</th>
+            <th>Total Quantity</th>
             <th>Rate</th>
             <th>Total</th>
             <th>Action</th>
@@ -19,8 +19,8 @@ const SelectedBooksTable = ({ selectedBooks, onDeleteBook }) => {
           {selectedBooks.map((book, index) => (
             <tr key={index}>
               <td>{book.book.name}</td>
-              <td>{book.book.bundleQuantity}</td>
               <td>{book.quantity}</td>
+              <td>{book.quantity * book.book.bundleQuantity}</td>
               <td>{book.rate}</td>
               <td>{book.quantity * book.rate * book.book.bundleQuantity}</td>
               <td>
