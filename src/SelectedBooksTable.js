@@ -18,11 +18,11 @@ const SelectedBooksTable = ({ selectedBooks, onDeleteBook }) => {
         <tbody>
           {selectedBooks.map((book, index) => (
             <tr key={index}>
-              <td>{book.book.name}</td>
+              <td>{book.book['name']}</td>
               <td>{book.quantity}</td>
-              <td>{book.quantity * book.book.bundleQuantity}</td>
+              <td>{book.quantity * book.bundleQuantity}</td>
               <td>{book.rate}</td>
-              <td>{book.quantity * book.rate * book.book.bundleQuantity}</td>
+              <td>{book.quantity * book.rate * book.bundleQuantity}</td>
               <td>
                 <button onClick={() => onDeleteBook(index)}>Delete</button>
               </td>

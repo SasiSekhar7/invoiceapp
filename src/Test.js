@@ -16,14 +16,20 @@ function App() {
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [quantity, setQuantity] = useState(0);
+  const [bundleQuantity, setBundleQuantity] = useState(0);
   const [rate, setRate] = useState(0);
   const [clients] = useState(clientsData);
   const [booksData] = useState(booksData1);
   const [transporters]= useState(transporterData);
   const [books, setBooks] = useState([]);
+  const [clientDetails, setClientDetails] = useState(null);
 
   const handleClientChange = (selectedOption) => {
     setSelectedClient(selectedOption);
+    const selectedClientDetails = clientsData.find(
+      (client) => client.shopName === selectedOption.shopName
+    );
+    setClientDetails(selectedClientDetails);
   };
   const handleTransporterChange = (selectedOption) => {
     setSelectedTransporter(selectedOption);
@@ -32,20 +38,24 @@ function App() {
     setSelectedBook(selectedOption);
     setQuantity('');
     if (selectedOption) {
-      setRate(selectedOption.rate); // Set the predefined rate for the selected book
+      setRate(selectedOption.rate); 
+      setBundleQuantity(selectedOption.bundleQuantity);
     } else {
       setRate(0);
+      setBundleQuantity(0);
     }
+    
   };
   
 
   const addBookToInvoice = () => {
     if (selectedBook && quantity > 0 && rate > 0) {
-      const bookInfo = { book: selectedBook, quantity, rate };
+      const bookInfo = { book: selectedBook, quantity, rate , bundleQuantity};
       setSelectedBooks([...selectedBooks, bookInfo]);
       setSelectedBook(null);
       setQuantity(0);
       setRate(0);
+      setBundleQuantity(0);
     }
   };
 
@@ -84,14 +94,23 @@ function App() {
       <div className="section">
         <h2>Select a Client:</h2>
         <Select
-          className="react-select"
+          className="react-select-big"
           value={selectedClient}
           onChange={handleClientChange}
           options={clients}
-          getOptionLabel={(option) => option['shopName']}
+          getOptionLabel={(option) => option['shopName']} 
           getOptionValue={(option) => option['shopName']}
         />
       </div>
+      {clientDetails && (
+          <div className="section">
+            <h2>Client Details:</h2>
+            <p><strong>Address:</strong> {clientDetails.ADRESS}</p>
+            <p><strong>Pin:</strong> {clientDetails.pin}</p>
+            <p><strong>Dist:</strong> {clientDetails.district}</p>
+            <p><strong>Mob.:</strong> {clientDetails.mobile}</p>
+          </div>
+        )}
       <div className="section">
       <h2>Select a Transporter:</h2>
         <Select
@@ -106,7 +125,7 @@ function App() {
       <div className="section">
         <h2>Enter packaging rate:</h2>
         <input
-            className='input-fields'
+            className='input-fields-reg'
             type="number"
             placeholder="Packaging Rate"
             value={packagingRate}
@@ -116,7 +135,7 @@ function App() {
       <div className="section">
         <h2>Select a Book:</h2>
         <Select
-          className="react-select"
+          className="react-select-big"
           value={selectedBook}
           onChange={handleBookChange}
           options={booksData}
@@ -129,6 +148,13 @@ function App() {
           placeholder="Quantity"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
+        />
+        <input
+          className='input-fields'
+          type="number"
+          placeholder="BundleQty"
+          value={bundleQuantity}
+          onChange={(e) => setBundleQuantity(e.target.value)}
         />
         <input
             className='input-fields'

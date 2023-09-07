@@ -8,16 +8,18 @@ const generateInvoice = (client, books, transporter, packaging) => {
   const drawCommonElements = () => {
     doc.setDrawColor(0); // Black color (default)
     doc.setLineWidth(0.5);
-    doc.roundedRect(10, 10, doc.internal.pageSize.width - 20, doc.internal.pageSize.height - 20, 10, 10, 'S');
-    doc.roundedRect(40, 10, 130, 20, 5, 5, 'S');
+    var borderWidth = -7; 
+    doc.roundedRect(10-borderWidth, 10-borderWidth, doc.internal.pageSize.width - 20+ (2 * borderWidth), doc.internal.pageSize.height - 20+ (2 * borderWidth), 10, 10, 'S');
+    doc.roundedRect(50, 20, 110, 10, 2, 2, 'S');
     const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString();
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const formattedDate = new Intl.DateTimeFormat('fr-FR', options).format(currentDate);
     callAddFont.call(doc);
     doc.setFont('Sunset-DemiBold Regular'); // Set the font for text
-    doc.setFontSize(38);
-    doc.text('Order - Estimation', 105, 25, { align: 'center' });
+    doc.setFontSize(25);
+    doc.text('ORDER - ESTIMATION', 105, 28, { align: 'center' });
     doc.setFontSize(18);
-    doc.text('SKBW', 105, 38, { align: 'center' });
+    doc.text('SRI KRISHNA BINDING WORKS', 105, 38, { align: 'center' });
     doc.setFontSize(14);
     doc.text('VIJAYAWADA', 105, 45, { align: 'center' });
     doc.setFont('helvetica', 'normal');
@@ -25,18 +27,21 @@ const generateInvoice = (client, books, transporter, packaging) => {
     doc.text('+91 94415 44936, +91 99511 47195', 105, 52, { align: 'center' });
 
     doc.setFontSize(12);
-    doc.text(`Date: ${formattedDate}`, 154, 55);
+    doc.text(`Date: ${formattedDate}`, 154, 59);
+    doc.text(`${client['AGENT']} / ${client['booktype']} `,20,59)
 
-    doc.line(10, 60, 200, 60);
+    doc.line(17, 63, 193, 63);
     //console.log(client['shopName'])
     doc.setFontSize(14);
-    doc.text(`${client['Name']},`, 14, 65);
-    doc.text(`${client['shopName']},`, 14, 72);
+   //doc.text(`${client['Name']},`, 14, 65);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`${client['shopName']}`, 20, 70);
     doc.setFontSize(12);
-    doc.text(`${client['address']}, ${client['place']}, ${client['district']}, ${client['pincode']}`,14,79);
-    doc.text(`${client['mobile']}`, 14, 86);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${client['ADRESS']}, ${client['CITY']}, ${client['district']}, ${client['pin']}`,20,77);
+    doc.text(`${client['mobile']}`, 20, 83);
     doc.setFontSize(10);
-    doc.text('GOODS ONCE SOLD CANNOT BE TAKEN BACK', doc.internal.pageSize.width / 2, doc.internal.pageSize.height - 12, {
+    doc.text('GOODS ONCE SOLD CANNOT BE TAKEN BACK', doc.internal.pageSize.width / 2, doc.internal.pageSize.height - 18, {
       align: 'center',
     });
 
@@ -52,18 +57,18 @@ const generateInvoice = (client, books, transporter, packaging) => {
     book.book['name'],
     (book.quantity * book.book['bundleQuantity']),
     book['rate'].toString(),
-    (book.quantity * book['rate'] * book.book['bundleQuantity']).toString(),
+    (book.quantity * book['rate'] * book.book['bundleQuantity']).toLocaleString('en-IN'),
   ]);
   let additionalFee = 80;
   let additionalFeeAmount =0;
-  if (transporter['name'] === 'GVR' || transporter['name'] === 'Chenupatti') {
+  if (transporter['name'] === 'G V R' || transporter['name'] === 'CHENNUPATTI CARGO SERVICES') {
 
     additionalFeeAmount = additionalFee * calculateTotalQuantity(books);
     tableData.push(['', `${transporter['name']}`, `${calculateTotalQuantity(books)}`, additionalFee.toString(), additionalFeeAmount.toString()]);
     }
   tableData.push(
     ['', 'PACKING FORWARD', `${calculateTotalQuantity(books)}`, packaging.toString(), packingForwardAmount.toString()],
-    ['', 'Thank You', '', '', `Total Amount: ${calculateTotalAmount(books, packingForwardAmount, additionalFeeAmount)}`]
+    ['', '               Thank You', '', 'Total ', `${calculateTotalAmount(books, packingForwardAmount, additionalFeeAmount).toLocaleString('en-IN')}`]
   );
 
 
@@ -85,6 +90,9 @@ const generateInvoice = (client, books, transporter, packaging) => {
       head: tableHeaders,
       body: chunk,
       startY: 90,
+      margin: {horizontal:18,top: 20},
+      startX: 40,
+      tableWidth: 174,
       theme: 'grid',
       headStyles: {
         fillColor: false,
@@ -93,6 +101,9 @@ const generateInvoice = (client, books, transporter, packaging) => {
 
       },
       columnStyles: {
+        0: { halign: 'center' },
+        2: { halign: 'center' },
+        3: { halign: 'center' },
         4: { halign: 'right' },
     },        
       styles: {
@@ -101,9 +112,10 @@ const generateInvoice = (client, books, transporter, packaging) => {
         lineWidth: 0.1,
 
       },
+
     });
 
-    doc.text(`Transporter: ${transporter['name']}`, 14, doc.autoTable.previous.finalY + 10);
+    doc.text(`Transporter: ${transporter['name']}`, 20, doc.autoTable.previous.finalY + 10);
   });
 
   // Continue with the rest of your code
