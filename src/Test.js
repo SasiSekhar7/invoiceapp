@@ -150,7 +150,7 @@ function App() {
         <h2>LR NO:</h2>
         <input
             className='input-fields-reg'
-            type="number"
+            type="text"
             placeholder="LRNO"
             value={LRNO}
             onChange={(e) => setLRNO(e.target.value)}
