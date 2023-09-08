@@ -2,7 +2,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import callAddFont from './sunsetfont';
 
-const generateInvoice = (client, books, transporter, packaging) => {
+const generateInvoice = (client, books, transporter, packaging,date,LRNO) => {
   const doc = new jsPDF();
 
   const drawCommonElements = () => {
@@ -11,9 +11,9 @@ const generateInvoice = (client, books, transporter, packaging) => {
     var borderWidth = -7; 
     doc.roundedRect(10-borderWidth, 10-borderWidth, doc.internal.pageSize.width - 20+ (2 * borderWidth), doc.internal.pageSize.height - 20+ (2 * borderWidth), 10, 10, 'S');
     doc.roundedRect(50, 20, 110, 10, 2, 2, 'S');
-    const currentDate = new Date();
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    const formattedDate = new Intl.DateTimeFormat('fr-FR', options).format(currentDate);
+    //const currentDate = new Date();
+    //const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    //const formattedDate = new Intl.DateTimeFormat('fr-FR', options).format(currentDate);
     callAddFont.call(doc);
     doc.setFont('Sunset-DemiBold Regular'); // Set the font for text
     doc.setFontSize(25);
@@ -27,7 +27,7 @@ const generateInvoice = (client, books, transporter, packaging) => {
     doc.text('+91 94415 44936, +91 99511 47195', 105, 52, { align: 'center' });
 
     doc.setFontSize(12);
-    doc.text(`Date: ${formattedDate}`, 154, 59);
+    doc.text(`Date: ${date}`, 154, 59);
     doc.text(`${client['AGENT']} / ${client['booktype']} `,20,59)
 
     doc.line(17, 63, 193, 63);
@@ -68,7 +68,7 @@ const generateInvoice = (client, books, transporter, packaging) => {
     }
   tableData.push(
     ['', 'PACKING FORWARD', `${calculateTotalQuantity(books)}`, packaging.toString(), packingForwardAmount.toString()],
-    ['', '               Thank You', '', 'Total ', `${calculateTotalAmount(books, packingForwardAmount, additionalFeeAmount).toLocaleString('en-IN')}`]
+    ['', '               Thank You', '', 'Total ', `${calculateTotalAmount(books, packingForwardAmount + additionalFeeAmount).toLocaleString('en-IN')}`]
   );
 
 
@@ -78,6 +78,7 @@ const generateInvoice = (client, books, transporter, packaging) => {
   for (let i = 0; i < tableData.length; i += rowsPerPage) {
     chunks.push(tableData.slice(i, i + rowsPerPage));
   }
+  let isLastPage = false;
 
   chunks.forEach((chunk, chunkIndex) => {
     if (chunkIndex > 0) {
@@ -112,12 +113,26 @@ const generateInvoice = (client, books, transporter, packaging) => {
         lineWidth: 0.1,
 
       },
+      didDrawPage: function (data) {
+        // Check if this is the last page
+        if (chunkIndex === chunks.length - 1) {
+          // This is the last page, so set the isLastPage variable to true
+          isLastPage = true;
+        }
+      },
 
     });
 
-    doc.text(`Transporter: ${transporter['name']}`, 20, doc.autoTable.previous.finalY + 10);
   });
-
+  
+  if (isLastPage) {
+    doc.text(`Transporter: ${transporter['name']}`, 24, doc.autoTable.previous.finalY + 5);
+    if (LRNO !== null) {
+      doc.text(`LR NO..${LRNO}`, 24, doc.autoTable.previous.finalY + 10);
+    }
+    doc.setFontSize(12);
+    doc.text('Signature :',140,doc.internal.pageSize.height - 24)
+  }
   // Continue with the rest of your code
 
   return doc;

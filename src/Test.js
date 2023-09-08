@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import './App1.css';
 import generateInvoice from './InvoiceTemplate3';
@@ -23,7 +23,15 @@ function App() {
   const [transporters]= useState(transporterData);
   const [books, setBooks] = useState([]);
   const [clientDetails, setClientDetails] = useState(null);
-
+  const [selectedDate, setSelectedDate] = useState('');
+  const [LRNO, setLRNO] = useState(null);
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${
+      String(currentDate.getMonth() + 1).padStart(2, '0')
+    }/${currentDate.getFullYear()}`;
+    setSelectedDate(formattedDate);
+  }, []);
   const handleClientChange = (selectedOption) => {
     setSelectedClient(selectedOption);
     const selectedClientDetails = clientsData.find(
@@ -76,7 +84,7 @@ function App() {
   };
   const downloadPdf = () => {
     if (selectedClient && selectedBooks.length > 0) {
-      const invoiceDoc = generateInvoice(selectedClient, selectedBooks, selectedTransporter, packagingRate);
+      const invoiceDoc = generateInvoice(selectedClient, selectedBooks, selectedTransporter, packagingRate,selectedDate,LRNO);
       invoiceDoc.save(`${selectedClient['shopName']}.pdf`);
       console.log(selectedClient)
     }
@@ -86,11 +94,19 @@ function App() {
     updatedBooks.splice(index, 1);
     setSelectedBooks(updatedBooks);
   };
-
   return (
    <div className='app-container'> 
     <div className="App">
       <h1 className="app-title">Order Estimation Generator</h1>
+      <div>
+          <input
+            className='input-fields-date'
+            type="text"
+            placeholder="DD-MM-YYYY"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </div>
       <div className="section">
         <h2>Select a Client:</h2>
         <Select
@@ -123,13 +139,21 @@ function App() {
         />
       </div>
       <div className="section">
-        <h2>Enter packaging rate:</h2>
+        <h2>Packaging rate:</h2>
         <input
             className='input-fields-reg'
             type="number"
             placeholder="Packaging Rate"
             value={packagingRate}
             onChange={(e) => setPackagingRate(e.target.value)}
+        />
+        <h2>LR NO:</h2>
+        <input
+            className='input-fields-reg'
+            type="number"
+            placeholder="LRNO"
+            value={LRNO}
+            onChange={(e) => setLRNO(e.target.value)}
         />
       </div>
       <div className="section">

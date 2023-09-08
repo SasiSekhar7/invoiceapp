@@ -104,6 +104,11 @@ body {
   width: 200px;
   height: 30px; /* Adjust the width as needed */
 }
+.input-fields-date {
+  width: 75px;
+  height: 30px; 
+  align-items: center;/* Adjust the width as needed */
+}
 .app-container {
   display: flex;
   flex-direction: column;
