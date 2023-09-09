@@ -9,7 +9,8 @@ const generateInvoice = (client, books, transporter, packaging,date,LRNO) => {
     doc.setDrawColor(0); // Black color (default)
     doc.setLineWidth(0.5);
     var borderWidth = -7; 
-    doc.roundedRect(10-borderWidth, 10-borderWidth, doc.internal.pageSize.width - 20+ (2 * borderWidth), doc.internal.pageSize.height - 20+ (2 * borderWidth), 10, 10, 'S');
+    const rectangleHeight = 5;
+    doc.roundedRect(10-borderWidth, 10-borderWidth, doc.internal.pageSize.width - 20+ (2 * borderWidth), doc.internal.pageSize.height - 20+ (2 * borderWidth)+rectangleHeight, 10, 10, 'S');
     doc.roundedRect(50, 20, 110, 10, 2, 2, 'S');
     //const currentDate = new Date();
     //const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -41,7 +42,7 @@ const generateInvoice = (client, books, transporter, packaging,date,LRNO) => {
     doc.text(`${client['ADRESS']}, ${client['CITY']}, ${client['district']}, ${client['pin']}`,20,77);
     doc.text(`${client['mobile']}`, 20, 83);
     doc.setFontSize(10);
-    doc.text('GOODS ONCE SOLD CANNOT BE TAKEN BACK', doc.internal.pageSize.width / 2, doc.internal.pageSize.height - 18, {
+    doc.text('GOODS ONCE SOLD CANNOT BE TAKEN BACK', doc.internal.pageSize.width / 2, doc.internal.pageSize.height - 13, {
       align: 'center',
     });
 
@@ -131,7 +132,7 @@ const generateInvoice = (client, books, transporter, packaging,date,LRNO) => {
       doc.text(`LR NO..${LRNO}`, 24, doc.autoTable.previous.finalY + 10);
     }
     doc.setFontSize(12);
-    doc.text('Signature :',140,doc.internal.pageSize.height - 24)
+    doc.text('Signature :',130,doc.internal.pageSize.height - 24)
   }
   // Continue with the rest of your code
 
