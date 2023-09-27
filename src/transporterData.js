@@ -1,10 +1,9 @@
 const transporters = [   
-
       {
         "name": "CHENNUPATTI CARGO SERVICES"
       },
       {
-        "name": "G V R"
+        "name": "GVR"
       },
       {
         "name": "CHENNUPATTI LORRY"
@@ -185,6 +184,12 @@ const transporters = [
       },
       {
         "name": "BY HAND"
+      },
+      {
+        "name": "AVANI LORRY"
+      },
+      {
+        "name": "PALNADU"
       },
         ];
 export default transporters;

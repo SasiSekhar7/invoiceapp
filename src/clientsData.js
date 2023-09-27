@@ -1,4 +1,5 @@
 const clients = [
+
       {
         "shopName": "KRISHNA PRASAD BOOKS&STATIONERY (KAMAREEDY)",
         "ADRESS": "MAIN ROAD",
@@ -883,9 +884,9 @@ const clients = [
         "booktype": "A"
       },
       {
-        "shopName": "RAVI FANCY & BOOK SELLERS (KOTHAGUDEM)",
+        "shopName": "RAVI FANCY & BOOK SELLERS (BHADRACHALAM)",
         "ADRESS": "# 8-2-55,NEHRU MARKET,",
-        "CITY": "KOTHAGUDEM",
+        "CITY": "BHADRACHALAM",
         "district": "BHADRADRI KOTHAGUDEM DIST",
         "pin": "507111",
         "mobile": "9849172621",
@@ -3142,16 +3143,6 @@ const clients = [
         "booktype": "R"
       },
       {
-        "shopName": "SRI BHAGAVAN BOOK STALL (NANDYALA)",
-        "ADRESS": "N K ROAD,",
-        "CITY": "NANDYALA",
-        "district": "KURNOOL DIST",
-        "pin": "518501",
-        "mobile": "9885189366",
-        "AGENT": "KUMAR",
-        "booktype": "R"
-      },
-      {
         "shopName": "SRI GEETHA BOOKS & FANCY STORE (NANDYALA)",
         "ADRESS": "2/160, KALPANA CENTRE,",
         "CITY": "NANDYALA",
@@ -4024,16 +4015,6 @@ const clients = [
       {
         "shopName": "SRI VENKATA RAMANA GENERALS(NAGARKURNOOL)",
         "ADRESS": "9-22, OPP.POST OFFICE,MAIN ROAD,",
-        "CITY": "NAGARKURNOOL",
-        "district": "NAGARKURNOOL DIST",
-        "pin": "509209",
-        "mobile": "9440656198",
-        "AGENT": "KUMAR",
-        "booktype": "H"
-      },
-      {
-        "shopName": "SRI VENKATARAMANA GENERAL (NAGARKURNOOL)",
-        "ADRESS": "OPP: POST OFFICE,",
         "CITY": "NAGARKURNOOL",
         "district": "NAGARKURNOOL DIST",
         "pin": "509209",
@@ -6811,7 +6792,56 @@ const clients = [
         "AGENT": "NAGARAJU",
         "booktype": "H"
       },
-        
+      {
+        "shopName": "SHIVA SHANKAR G/S (NALGONDA)",
+        "ADRESS": "RAMGIRI,",
+        "CITY": "NALGONDA",
+        "district": "NALGONDA DIST",
+        "pin": 508001,
+        "mobile": 9700880080,
+        "AGENT": "NAGARAJU",
+        "booktype": "A"
+      },
+      {
+        "shopName": "MARUTHI GENERAL STORES (NAKEREKAL)",
+        "ADRESS": "MUSI ROAD,",
+        "CITY": "NAKEREKAL",
+        "district": "NALGONDA DIST",
+        "pin": 508211,
+        "mobile": 9247877551,
+        "AGENT": "NAGARAJU",
+        "booktype": "A"
+      },
+      {
+        "shopName": "VIJAY FASHIONS BOOKS CENTER-PAPANAIDUPETA",
+        "ADRESS": "2-46,BAZAAR STREET",
+        "CITY": "PAPANAIDUPETA",
+        "district": "CHITOOR DIST",
+        "pin": 517526,
+        "mobile": 7672044972,
+        "AGENT": "KUMAR",
+        "booktype": "N"
+      },
+      {
+        "shopName": "JAI BHAVANI BOOK STALL-TENALI",
+        "ADRESS": "OPP:GUPTHA COLLAGE , BUS STAND ROAD",
+        "CITY": "TENALI",
+        "district": "GUNTUR DIST",
+        "pin": 522201,
+        "mobile": 7032176318,
+        "AGENT": "KUMAR",
+        "booktype": "N"
+      },
+      {
+        "shopName": "TTEEJA BOOK CENTER&XEROX(MAHABUBNAGAR) ",
+        "ADRESS": "PALAMOOR UNIVERSITY",
+        "CITY": "MAHABUBNAGAR",
+        "district": "MAHABUBNAGAR DIST",
+        "pin": 509001,
+        "mobile": 8096312159,
+        "AGENT": "KUMAR",
+        "booktype": "H"
+      },
     
 ]  
 export default clients;
